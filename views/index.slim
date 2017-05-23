@@ -20,26 +20,26 @@ html
 
   body(style="font-family:-apple-system, BlinkMacSystemFont;")
     header.center
-      h1.f1.lh-solid.tc
+      h1.f1-ns.f2.mv2.tc
         a.no-underline.dark-gray(href="/") Rails Inflector Lookup
-      form#form.tc
-        p.f3.lh-title.tc.di.v-mid
-          div.mt5.dib.v-mid(style="margin-top: 1.6rem")
-            input#input.input-reset.f3.mh3.pv3.ph5.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@text}")
-            ul.f5.tc.mv1.list.silver.ph0
-              li.dib.ph2
-                a.no-underline.blue(href="/foo+bar") foo bar
-              li.dib.ph2
-                a.no-underline.blue(href="/foo_bar") foo_bar
-              li.dib.ph2
-                a.no-underline.blue(href="/foo-bar") foo-bar
-              li.dib.ph2
-                a.no-underline.blue(href="/foo/bar") foo/bar
-              li.dib.ph2
-                a.no-underline.blue(href="/Foo::Bar") Foo::Bar
-          div.dib.v-mid
-            input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
-
+      div.mv4-ns
+        form#form.tc(style="margin-top: -2rem")
+          p.f3.lh-title.tc.di.v-mid
+            div.mt5.dib.v-mid(style="margin-top: 1.6rem")
+              input#input.input-reset.f3.mh3.pv3.ph2.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@escaped}" style="width:350px")
+              ul.f5.tc.mv1.list.silver.ph0
+                li.dib.ph2
+                  a.no-underline.blue(href="/foo+bar") foo bar
+                li.dib.ph2
+                  a.no-underline.blue(href="/foo_bar") foo_bar
+                li.dib.ph2
+                  a.no-underline.blue(href="/foo-bar") foo-bar
+                li.dib.ph2
+                  a.no-underline.blue(href="/foo/bar") foo/bar
+                li.dib.ph2
+                  a.no-underline.blue(href="/Foo::Bar") Foo::Bar
+            div.dib.v-mid
+              input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
 
     main.f6.cf.mt4.mw9
       div.fl.w-50-ns.w-100.pa2
@@ -48,12 +48,12 @@ html
             tr.striped--light-gray
               td.pv2.ph2
                 code= ".#{inflect}"
-              td.pv2.ph3
+              td.pv2.ph3.w-10
                 | #=>
               td.pv2.ph2
                 code
                   - begin
-                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
+                    == %Q[<a href="/#{@text.send(inflect).to_s}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
                   - rescue NoMethodError => e
                     .error.red= 'undefined method'
                   - rescue => e
@@ -65,7 +65,7 @@ html
             tr.striped--light-gray
               td.pv2.ph2
                 code= ".#{inflect}"
-              td.pv2.ph3
+              td.pv2.ph3.w-10
                 | #=>
               td.pv2.ph2
                 code
