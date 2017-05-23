@@ -1,5 +1,6 @@
 require 'roda'
 require 'active_support/inflector'
+require 'active_support/version'
 
 class App < Roda
 
@@ -7,10 +8,7 @@ class App < Roda
 
   route do |r|
 
-    @inflections1 = %w[camelize classify constantize dasherize deconstantize
-      demodulize foreign_key humanize inflections ordinal]
-    @inflections2 = %w[ordinalize parameterize pluralize safe_constantize
-      singularize tableize titleize transliterate underscore upcase_first]
+    @inflections = ActiveSupport::Inflector.instance_methods.sort
 
     r.root do
       @text = 'foo bar'
