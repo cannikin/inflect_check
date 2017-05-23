@@ -5,7 +5,8 @@ require 'active_support/version'
 
 class App < Roda
 
-  INFLECTIONS = ActiveSupport::Inflector.instance_methods.sort
+  BLACKLIST = [:inflections, :transliterate]
+  INFLECTIONS = ActiveSupport::Inflector.instance_methods.sort.reject { |i| BLACKLIST.include?(i) }
   INDEXES = {
     :first_end => INFLECTIONS.length.odd? ? INFLECTIONS.length / 2 + 1 : INFLECTIONS.length / 2,
     :second_start => INFLECTIONS.length.odd? ? INFLECTIONS.length - INFLECTIONS.length / 2 - 1 : INFLECTIONS.length - INFLECTIONS.length / 2
