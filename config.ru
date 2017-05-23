@@ -4,11 +4,15 @@ require 'active_support/version'
 
 class App < Roda
 
+  INFLECTIONS = ActiveSupport::Inflector.instance_methods.sort
+  INDEXES = {
+    :first_end => INFLECTIONS.length.odd? ? INFLECTIONS.length / 2 + 1 : INFLECTIONS.length / 2,
+    :second_start => INFLECTIONS.length.odd? ? INFLECTIONS.length - INFLECTIONS.length / 2 - 1 : INFLECTIONS.length - INFLECTIONS.length / 2
+  }
+
   plugin :render, :engine => 'slim'
 
   route do |r|
-
-    @inflections = ActiveSupport::Inflector.instance_methods.sort
 
     r.root do
       @text = 'foo bar'

@@ -20,12 +20,11 @@ html
   body(style="font-family:-apple-system, BlinkMacSystemFont;")
     header.center
       h1.f1.lh-solid.tc
-        a.no-underline.black(href="/") Rails Inflector Checker
+        a.no-underline.dark-gray(href="/") Rails Inflector Checker
       form#form.tc
-        p.f2.lh-title.tc.di.v-mid
-          span.ph1 Gimmie inflectors for
+        p.f3.lh-title.tc.di.v-mid
           div.mt5.dib.v-mid(style="margin-top: 1.6rem")
-            input#input.input-reset.f2.mh3.pv3.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@text}")
+            input#input.input-reset.f3.mh3.pv3.ph5.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@text}")
             ul.f5.tc.mv1.list.silver.ph0
               li.dib.ph2
                 a.no-underline.blue(href="/foo+bar") foo bar
@@ -38,13 +37,13 @@ html
               li.dib.ph2
                 a.no-underline.blue(href="/Foo::Bar") Foo::Bar
           div.dib.v-mid
-            input#commit.f2.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
+            input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
 
 
     main.f6.cf.mt4.mw9
       div.fl.w-50-ns.w-100.pa2
         table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
-          - @inflections.first(@inflections.length/2).each do |inflect|
+          - INFLECTIONS.first(INDEXES[:first_end]).each do |inflect|
             tr.striped--light-gray
               td.pv2.ph2
                 code= ".#{inflect}"
@@ -53,7 +52,7 @@ html
               td.pv2.ph2
                 code
                   - begin
-                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect)}</a>]
+                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
                   - rescue NoMethodError => e
                     .error.red= 'undefined method'
                   - rescue => e
@@ -61,7 +60,7 @@ html
 
       div.fl.w-50-ns.w-100.pa2
         table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
-          - @inflections.last(@inflections.length/2).each do |inflect|
+          - INFLECTIONS.last(INDEXES[:second_start]).each do |inflect|
             tr.striped--light-gray
               td.pv2.ph2
                 code= ".#{inflect}"
@@ -70,7 +69,7 @@ html
               td.pv2.ph2
                 code
                   - begin
-                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect)}</a>]
+                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
                   - rescue NoMethodError => e
                     .error.red= 'undefined method'
                   - rescue => e
@@ -79,11 +78,10 @@ html
     footer.mt4.tc
       p
         | By&nbsp;
-        a(href="http://ridingtheclutch.com") Rob Cameron
+        a.blue(href="http://ridingtheclutch.com") Rob Cameron
         | , Powered by&nbsp;
-        a(href="http://roda.jeremyevans.net") Roda
-      p
-        | Using ActiveSupport&nbsp;
+        a.blue(href="http://roda.jeremyevans.net") Roda
+        | , Using ActiveSupport&nbsp;
         = ActiveSupport.version
 
     javascript:
