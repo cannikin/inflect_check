@@ -3,7 +3,7 @@ require 'active_support/inflector'
 
 class App < Roda
 
-  plugin :render, :engine => :slim
+  plugin :render, :engine => 'slim'
 
   route do |r|
 
