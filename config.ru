@@ -17,7 +17,9 @@ class App < Roda
   route do |r|
 
     r.root do
-      @text = 'foo bar'
+      @raw = 'foo bar'
+      @escaped = CGI.unescape(@raw)
+      @text = @escaped
       render :index
     end
 
