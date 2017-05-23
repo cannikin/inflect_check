@@ -16,16 +16,9 @@ class App < Roda
     end
 
     r.on :all do |text|
-      puts r.path
       @text = CGI.unescape(r.path[1..-1])
       render :index
     end
-
-    # r.get :text do |text|
-    #   puts r.path
-    #   @text = CGI.unescape(text)
-    #   render 'index'
-    # end
 
   end
 
