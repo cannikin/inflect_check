@@ -1,5 +1,6 @@
 require 'roda'
 require 'active_support/inflector'
+require 'active_support/core_ext/integer/inflections'
 require 'active_support/version'
 
 class App < Roda
@@ -20,7 +21,9 @@ class App < Roda
     end
 
     r.on :all do |text|
-      @text = CGI.unescape(r.path[1..-1])
+      @raw = r.path[1..-1]
+      @escaped = CGI.unescape(@raw)
+      @text = @escaped.to_i.zero? ? @escaped : @escaped.to_i
       render :index
     end
 
