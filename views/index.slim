@@ -1,0 +1,107 @@
+doctype html
+html
+  head
+    title Rails Inflector Checker
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css")
+    sass:
+      $blue: #357edd
+      input[type=submit]
+        color: #ffffff
+        background-color: $blue
+        border: none
+        cursor: pointer
+        transition: all 0.2s
+        &:hover
+          background-color: darken($blue, 10%)
+
+  body(style="font-family:-apple-system, BlinkMacSystemFont;")
+    header.center
+      h1.f1.lh-solid.tc
+        a.no-underline.black(href="/") Rails Inflector Checker
+      form#form.tc
+        p.f2.lh-title.tc.di
+          span.ph3 Enter your string:
+          input#input.f2.mh3.pv3.b1.tc(type="text" value="#{@text}")
+          input#commit.f2.mh3.mv1-ns.pv3.ph5(type="submit" value="Inflect")
+      ul.f4.tc.mv1.list
+        li.dib.ph2
+          | Try:
+        li.dib.ph2
+          a.no-underline.blue(href="/foo+bar") foo bar
+        li.dib.ph2
+          a.no-underline.blue(href="/foo_bar") foo_bar
+        li.dib.ph2
+          a.no-underline.blue(href="/foo-bar") foo-bar
+        li.dib.ph2
+          a.no-underline.blue(href="/FooBar") FooBar
+
+    main.f6.cf.mt4.mw9
+      div.fl.w-50-ns.w-100.pa2
+        table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
+          - @inflections1.each do |inflect|
+            tr.striped--light-gray
+              td.pv2.ph2
+                code= ".#{inflect}"
+              td.pv2.ph3
+                | #=>
+              td.pv2.ph2
+                code
+                  - begin
+                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect)}</a>]
+                  - rescue NoMethodError => e
+                    .error.red= 'undefined method'
+                  - rescue => e
+                    .error.red= e.message
+
+      div.fl.w-50-ns.w-100.pa2
+        table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
+          - @inflections2.each do |inflect|
+            tr.striped--light-gray
+              td.pv2.ph2
+                code= ".#{inflect}"
+              td.pv2.ph3
+                | #=>
+              td.pv2.ph2
+                code
+                  - begin
+                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect)}</a>]
+                  - rescue NoMethodError => e
+                    .error.red= 'undefined method'
+                  - rescue => e
+                    .error.red= e.message
+
+    footer.mt4.tc
+      p
+        | By&nbsp;
+        a(href="http://ridingtheclutch.com") Rob Cameron
+        | , Powered by&nbsp;
+        a(href="http://roda.jeremyevans.net") Roda
+
+    javascript:
+      var InflectCheck = {
+        $form: document.getElementById('form'),
+        $commit: document.getElementById('commit'),
+        $input: document.getElementById('input'),
+        go: function() {
+          location.href = '/' + this.$input.value;
+        },
+        onSubmit: function(e) {
+          e.preventDefault();
+        },
+        onKeyUp: function(e) {
+          if (e.key == 'Enter') {
+            this.go.call(this);
+          }
+        },
+        init: function(window) {
+          this.$form.addEventListener('submit', this.onSubmit.bind(this));
+          this.$commit.addEventListener('click', this.go.bind(this));
+          this.$input.addEventListener('keyup', this.onKeyUp.bind(this));
+          this.$input.select();
+        }
+      };
+
+      document.addEventListener('DOMContentLoaded', function() {
+        InflectCheck.init(window);
+      });
