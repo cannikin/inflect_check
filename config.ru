@@ -14,12 +14,12 @@ class App < Roda
 
     r.root do
       @text = 'foo bar'
-      render :index
+      render 'index'
     end
 
     r.get :text do |text|
       @text = CGI.unescape(text)
-      render :index
+      render 'index'
     end
 
   end
