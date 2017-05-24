@@ -8,6 +8,10 @@ sass:
     color: #ffffff
   input[type=text]
     outline: none
+    &::selection
+      background: lighten($red, 40%)
+    &::-moz-selection
+      background: lighten($red, 40%)
   input[type=submit]
     color: $red
     background-color: #ffffff
