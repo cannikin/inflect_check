@@ -6,6 +6,12 @@ sass:
   header
     background-color: $red
     color: #ffffff
+  h1
+    font-weight: 200
+    font-size: 3.5rem
+  @media screen and (max-width: 30em)
+    h1
+      font-size: 2.5rem
   input[type=text]
     outline: none
     &::selection
@@ -27,7 +33,7 @@ sass:
     font-family: 'Fira Mono', Menlo, Monaco, monospace
 
 header.pt3.pb1.center
-  h1.f1-ns.f2.ma0.tc.mb3.mb0-ns
+  h1.ma0.tc.mb3.mb0-ns
     a.no-underline.white(href="/") Rails Inflector Lookup
   div.mv4-ns
     == partial('form', :locals => { :value => @escaped })
