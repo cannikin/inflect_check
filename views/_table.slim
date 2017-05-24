@@ -1,0 +1,15 @@
+table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
+  - inflections.each do |inflect|
+    tr.striped--light-gray
+      td.pv2.ph2
+        code.inflection(title=DOCS[inflect])= ".#{inflect}"
+      td.pv2.ph3.w-10
+        | #=>
+      td.pv2.ph2
+        code
+          - begin
+            == %Q[<a href="/#{text.send(inflect).to_s}" class="no-underline black">#{text.send(inflect).inspect}</a>]
+          - rescue NoMethodError => e
+            .error.red= 'undefined method'
+          - rescue => e
+            .error.red= e.message

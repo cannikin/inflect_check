@@ -33,6 +33,7 @@ class App < Roda
   }
 
   plugin :render, :engine => 'slim'
+  plugin :partials, :views => 'views'
 
   route do |r|
 

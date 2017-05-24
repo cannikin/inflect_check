@@ -1,0 +1,17 @@
+form#form.tc(style="margin-top: -2rem")
+  p.f3.lh-title.tc.di.v-mid
+    div.mt5.dib.v-mid(style="margin-top: 1.6rem")
+      input#input.input-reset.f3.mh3.pv3.ph2.bw0.tc(type="text" value="#{value}" style="width:350px")
+      ul.f5.tc.mv1.list.silver.ph0
+        li.dib.ph2
+          a.no-underline.white(href="/foo+bar") foo bar
+        li.dib.ph2
+          a.no-underline.white(href="/foo_bar") foo_bar
+        li.dib.ph2
+          a.no-underline.white(href="/foo-bar") foo-bar
+        li.dib.ph2
+          a.no-underline.white(href="/foo/bar") foo/bar
+        li.dib.ph2
+          a.no-underline.white(href="/Foo::Bar") Foo::Bar
+    div.dib.v-mid.mt3.mt0-ns
+      input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
