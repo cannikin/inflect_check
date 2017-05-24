@@ -6,13 +6,14 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css")
 
-  body(style="font-family:-apple-system, BlinkMacSystemFont;")
+  body.sans-serif
     == yield
     footer.mt4.tc
       p
-        | By&nbsp;
-        a.blue(href="http://ridingtheclutch.com") Rob Cameron
-        | , Powered by&nbsp;
-        a.blue(href="http://roda.jeremyevans.net") Roda
-        | , Using ActiveSupport&nbsp;
-        = ActiveSupport.version
+        span> By
+        a(href="http://ridingtheclutch.com") Rob Cameron
+        span<> | Powered by
+        a(href="http://roda.jeremyevans.net") Roda
+        span<> | Using
+        a(href="http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html")
+          = "ActiveSupport #{ActiveSupport.version}"
