@@ -1,114 +1,100 @@
-doctype html
-html
-  head
-    title Rails Inflector Lookup
-    meta(name="description" content="Quick lookup for what Ruby on Rails returns for all of the ActiveSupport::Inflector string modifiers")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
-    link(rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css")
-    sass:
-      $blue: #357edd
-      input[type=text]
-        outline: none
-      input[type=submit]
-        color: #ffffff
-        background-color: $blue
-        border: none
-        cursor: pointer
-        transition: all 0.2s
-        &:hover
-          background-color: darken($blue, 10%)
+sass:
+  $blue: #357edd
+  input[type=text]
+    outline: none
+  input[type=submit]
+    color: #ffffff
+    background-color: $blue
+    border: none
+    cursor: pointer
+    transition: all 0.2s
+    &:hover
+      background-color: darken($blue, 10%)
+  .inflection
+    border-bottom: 1px dashed #aaaaaa
+    cursor: help
 
-  body(style="font-family:-apple-system, BlinkMacSystemFont;")
-    header.center
-      h1.f1-ns.f2.mv2.tc
-        a.no-underline.dark-gray(href="/") Rails Inflector Lookup
-      div.mv4-ns
-        form#form.tc(style="margin-top: -2rem")
-          p.f3.lh-title.tc.di.v-mid
-            div.mt5.dib.v-mid(style="margin-top: 1.6rem")
-              input#input.input-reset.f3.mh3.pv3.ph2.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@escaped}" style="width:350px")
-              ul.f5.tc.mv1.list.silver.ph0
-                li.dib.ph2
-                  a.no-underline.blue(href="/foo+bar") foo bar
-                li.dib.ph2
-                  a.no-underline.blue(href="/foo_bar") foo_bar
-                li.dib.ph2
-                  a.no-underline.blue(href="/foo-bar") foo-bar
-                li.dib.ph2
-                  a.no-underline.blue(href="/foo/bar") foo/bar
-                li.dib.ph2
-                  a.no-underline.blue(href="/Foo::Bar") Foo::Bar
-            div.dib.v-mid.mt3.mt0-ns
-              input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
+header.center
+  h1.f1-ns.f2.mv2.tc
+    a.no-underline.dark-gray(href="/") Rails Inflector Lookup
+  div.mv4-ns
+    form#form.tc(style="margin-top: -2rem")
+      p.f3.lh-title.tc.di.v-mid
+        div.mt5.dib.v-mid(style="margin-top: 1.6rem")
+          input#input.input-reset.f3.mh3.pv3.ph2.ba.b--dotted.b--light-gray.bw1.tc(type="text" value="#{@escaped}" style="width:350px")
+          ul.f5.tc.mv1.list.silver.ph0
+            li.dib.ph2
+              a.no-underline.blue(href="/foo+bar") foo bar
+            li.dib.ph2
+              a.no-underline.blue(href="/foo_bar") foo_bar
+            li.dib.ph2
+              a.no-underline.blue(href="/foo-bar") foo-bar
+            li.dib.ph2
+              a.no-underline.blue(href="/foo/bar") foo/bar
+            li.dib.ph2
+              a.no-underline.blue(href="/Foo::Bar") Foo::Bar
+        div.dib.v-mid.mt3.mt0-ns
+          input#commit.f3.mh3.mv1-ns.pv3.ph4.br3(type="submit" value="Go")
 
-    main.f6.cf.mt4.mw9
-      div.fl.w-50-ns.w-100.pa2
-        table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
-          - INFLECTIONS.first(INDEXES[:first_end]).each do |inflect|
-            tr.striped--light-gray
-              td.pv2.ph2
-                code= ".#{inflect}"
-              td.pv2.ph3.w-10
-                | #=>
-              td.pv2.ph2
-                code
-                  - begin
-                    == %Q[<a href="/#{@text.send(inflect).to_s}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
-                  - rescue NoMethodError => e
-                    .error.red= 'undefined method'
-                  - rescue => e
-                    .error.red= e.message
+main.f6.cf.mt4.mw9
+  div.fl.w-50-ns.w-100.pa2
+    table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
+      - INFLECTIONS.first(INDEXES[:first_end]).each do |inflect|
+        tr.striped--light-gray
+          td.pv2.ph2
+            code.inflection(title=DOCS[inflect])= ".#{inflect}"
+          td.pv2.ph3.w-10
+            | #=>
+          td.pv2.ph2
+            code
+              - begin
+                == %Q[<a href="/#{@text.send(inflect).to_s}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
+              - rescue NoMethodError => e
+                .error.red= 'undefined method'
+              - rescue => e
+                .error.red= e.message
 
-      div.fl.w-50-ns.w-100.pa2
-        table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
-          - INFLECTIONS.last(INDEXES[:second_start]).each do |inflect|
-            tr.striped--light-gray
-              td.pv2.ph2
-                code= ".#{inflect}"
-              td.pv2.ph3.w-10
-                | #=>
-              td.pv2.ph2
-                code
-                  - begin
-                    == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
-                  - rescue NoMethodError => e
-                    .error.red= 'undefined method'
-                  - rescue => e
-                    .error.red= e.message
+  div.fl.w-50-ns.w-100.pa2
+    table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
+      - INFLECTIONS.last(INDEXES[:second_start]).each do |inflect|
+        tr.striped--light-gray
+          td.pv2.ph2
+            code.inflection(title=DOCS[inflect])= ".#{inflect}"
+          td.pv2.ph3.w-10
+            | #=>
+          td.pv2.ph2
+            code
+              - begin
+                == %Q[<a href="/#{@text.send(inflect)}" class="no-underline black">#{@text.send(inflect).inspect}</a>]
+              - rescue NoMethodError => e
+                .error.red= 'undefined method'
+              - rescue => e
+                .error.red= e.message
 
-    footer.mt4.tc
-      p
-        | By&nbsp;
-        a.blue(href="http://ridingtheclutch.com") Rob Cameron
-        | , Powered by&nbsp;
-        a.blue(href="http://roda.jeremyevans.net") Roda
-        | , Using ActiveSupport&nbsp;
-        = ActiveSupport.version
+javascript:
+  var InflectCheck = {
+    $form: document.getElementById('form'),
+    $commit: document.getElementById('commit'),
+    $input: document.getElementById('input'),
+    go: function() {
+      location.href = '/' + this.$input.value;
+    },
+    onSubmit: function(e) {
+      e.preventDefault();
+    },
+    onKeyUp: function(e) {
+      if (e.key == 'Enter') {
+        this.go.call(this);
+      }
+    },
+    init: function(window) {
+      this.$form.addEventListener('submit', this.onSubmit.bind(this));
+      this.$commit.addEventListener('click', this.go.bind(this));
+      this.$input.addEventListener('keyup', this.onKeyUp.bind(this));
+      this.$input.select();
+    }
+  };
 
-    javascript:
-      var InflectCheck = {
-        $form: document.getElementById('form'),
-        $commit: document.getElementById('commit'),
-        $input: document.getElementById('input'),
-        go: function() {
-          location.href = '/' + this.$input.value;
-        },
-        onSubmit: function(e) {
-          e.preventDefault();
-        },
-        onKeyUp: function(e) {
-          if (e.key == 'Enter') {
-            this.go.call(this);
-          }
-        },
-        init: function(window) {
-          this.$form.addEventListener('submit', this.onSubmit.bind(this));
-          this.$commit.addEventListener('click', this.go.bind(this));
-          this.$input.addEventListener('keyup', this.onKeyUp.bind(this));
-          this.$input.select();
-        }
-      };
-
-      document.addEventListener('DOMContentLoaded', function() {
-        InflectCheck.init(window);
-      });
+  document.addEventListener('DOMContentLoaded', function() {
+    InflectCheck.init(window);
+  });
