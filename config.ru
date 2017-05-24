@@ -36,18 +36,17 @@ class App < Roda
 
   route do |r|
 
+    @path = r.path[1..-1]
+    @raw = @path.empty? ? 'foo bar' : @path
+    @escaped = CGI.unescape(@raw)
+    @text = @escaped.to_i.zero? ? @escaped : @escaped.to_i
+
     r.root do
-      @raw = 'foo bar'
-      @escaped = CGI.unescape(@raw)
-      @text = @escaped
-      render :index
+      view :index
     end
 
     r.on :all do |text|
-      @raw = r.path[1..-1]
-      @escaped = CGI.unescape(@raw)
-      @text = @escaped.to_i.zero? ? @escaped : @escaped.to_i
-      render :index
+      view :index
     end
 
   end
