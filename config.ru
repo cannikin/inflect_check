@@ -34,6 +34,7 @@ class App < Roda
 
   plugin :render, :engine => 'slim'
   plugin :partials, :views => 'views'
+  plugin :public
 
   route do |r|
 
@@ -41,6 +42,8 @@ class App < Roda
     @raw = @path.empty? ? 'foo bar' : @path
     @escaped = CGI.unescape(@raw)
     @text = @escaped.to_i.zero? ? @escaped : @escaped.to_i
+
+    r.public
 
     r.root do
       view :index
