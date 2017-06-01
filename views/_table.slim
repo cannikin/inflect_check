@@ -8,7 +8,9 @@ table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
       td.pv2.ph2
         code
           - begin
-            == %Q[<a href="/#{text.send(inflect).to_s}" class="no-underline black">#{text.send(inflect).inspect}</a>]
+            - output = text.send(inflect).to_s
+            a(href="/#{output.to_s}" class="no-underline black")
+              = output.inspect
           - rescue NoMethodError => e
             .error.red= 'undefined method'
           - rescue => e
