@@ -11,10 +11,10 @@ table.collapse.ba.br2.b--black-10.pv2.ph3.w-100
             - output = text.send(inflect).to_s
             a(href="/#{output}" class="no-underline black")
               = output.inspect
+          - rescue NoMethodError => e
+            .error.red= 'undefined method'
           - rescue NameError => e
             a(href="/#{text}" class="no-underline black")
               = text
-          - rescue NoMethodError => e
-            .error.red= 'undefined method'
           - rescue => e
             .error.red= e.message
