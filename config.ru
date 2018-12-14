@@ -55,6 +55,16 @@ class App < Roda
 
   end
 
+  def link(text, options={})
+    output = "<a href=\"#{text}\" class=\"no-underline black\">"
+    output += options[:inspect] ? text.inspect.to_s : text.to_s
+    output + '</a>'
+  end
+
+  def error_message(text)
+    "<div class=\"error red\">#{text}</div>"
+  end
+
 end
 
 run App.freeze.app
