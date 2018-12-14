@@ -39,7 +39,7 @@ class App < Roda
   route do |r|
 
     @path = r.path[1..-1]
-    @raw = @path.empty? ? 'foo bar' : @path
+    @raw = @path.empty? ? 'foo_bar' : @path
     @escaped = CGI.unescape(@raw)
     @text = @escaped.to_i.zero? ? @escaped : @escaped.to_i
 
